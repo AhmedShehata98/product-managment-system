@@ -13,9 +13,14 @@ const pricingForm = document.querySelector('#mainPriceingForm'),
     CreateBTN          = document.getElementById('CreateBtn'),
     SearchField        = document.getElementById('searchFaild'),
     SearchBTN_category = document.getElementById('search_Category'),
-    SearchBTN_Title    = document.getElementById('search_title');
+    SearchBTN_Title    = document.getElementById('search_title'),
+    alertBox_Container = document.getElementById('alertBox_Container'),
     TableOutData    = document.getElementById('myoutputArea');
 
+
+    // Create assist variable to identify mode
+    let create= true;
+    let assistIndexVar;
     // Array store all the Products 
     // retrive data that saved in the localstorage to rhe array
     let ALL_THE_PRODUCTS=[];
@@ -49,13 +54,25 @@ ProductAds.addEventListener('input',GET_TOTAL_PRICE);
 ProductDiscount.addEventListener('input',GET_TOTAL_PRICE);
 
 CreateBTN.addEventListener('click',()=>{
-    CREATE_PRODCT();
-    pricingForm.reset()
-    REST_FIELD_PARAMETERS();
-    counter.textContent = ALL_THE_PRODUCTS.length
+    if (ProductTitle.value !== '' && ProductPrice.value !== '' && create === true) {
+        CREATE_PRODCT();
+        ALERT_USER('<i class="bi bi-check-square-fill"></i>','The product has been successfully added','success')
+        pricingForm.reset()
+        REST_FIELD_PARAMETERS();
+        counter.textContent = ALL_THE_PRODUCTS.length;
+    }else if(ProductTitle.value !== '' && ProductPrice.value !== '' && create === false){
+        CREATE_PRODCT('update' , assistIndexVar);
+        REST_FIELD_PARAMETERS();
+        pricingForm.reset();
+        ALERT_USER('<i class="bi bi-info-square-fill"></i>','Product details have been successfully updated','warning');
+        CreateBTN.textContent = 'search' ;
+        CreateBTN.className = 'btn btn-success  bg-gradient shadow rounded-pill w-100 fw-bold' ;
+    }
+
 })
 
 
+CHECK_IF_PRODCT();
 
 // create functions
 // 
@@ -82,7 +99,7 @@ function GET_TOTAL_PRICE(){
     }
 }
 
-function CREATE_PRODCT(){
+function CREATE_PRODCT(sendStatus,index){
     productObject={
         product_name            : (ProductTitle.value).toUpperCase(),
         product_price_amount    : +(ProductPrice.value),
@@ -95,15 +112,37 @@ function CREATE_PRODCT(){
         
     }
 
-    ALL_THE_PRODUCTS.push(productObject);
+    if(sendStatus === 'update'){
+        ALL_THE_PRODUCTS.splice(index,1,productObject);
+    }else{
+        ALL_THE_PRODUCTS.push(productObject);
+    }
     window.localStorage.setItem('product',JSON.stringify(ALL_THE_PRODUCTS));
     ADD_PRODCT_TO_TABLE(ALL_THE_PRODUCTS)
+}
+
+function ALERT_USER(icon,message,classname){
+    const wrapper = document.createElement('div');
+    const msgholder = document.createElement('h4');
+    const dismissBTN = document.createElement('button');
+    
+    wrapper.className = `alert alert-dismissible fade show alert-${classname} m-0 d-flex justify-content-between align-item-center`
+    msgholder.className = 'd-flex gap-3 m-0'
+    wrapper.setAttribute('role','alert');
+    wrapper.setAttribute('data-bs-dismiss','alert');
+    wrapper.appendChild(msgholder);
+    msgholder.innerHTML += `${icon}` ;
+    msgholder.appendChild(document.createTextNode(message));
+    wrapper.appendChild(dismissBTN);
+    dismissBTN.className = 'btn-close';
+    dismissBTN.setAttribute('aria-labe','close');
+
+    alertBox_Container.appendChild(wrapper);
 }
 
 function ADD_PRODCT_TO_TABLE(product){
     TableOutData.innerHTML = '';
     for(let i=0 ; i < product.length ; i++){
-        console.log(product[i]);
 
         const tableData =`
         <tr>
@@ -114,10 +153,10 @@ function ADD_PRODCT_TO_TABLE(product){
             <td>${product[i].product_taxes_amount }</td>
             <td>${product[i].product_ads_amount }</td>
             <td>${product[i].product_discount_amount }</td>
-            <td>${product[i].product_count }</td>
+            <td>${product[i].product_count}</td>
             <td>${product[i].product_total_amount }</td>
-            <td class="me-0 p-1 pe-0"><button type="button" class="btn btn-dark ">Update</button></td>
-            <td class="ms-0 p-1 ps-0"><button type="button" class="btn btn-danger " onclick="deleteIT(${i})" >Delete</button></td>
+            <td class="me-0 p-1 pe-0"><button type="button" class="btn btn-dark" onclick='UPDATE_PRODCT_DATA(${i})'>Update</button></td>
+            <td class="ms-0 p-1 ps-0"><button type="button" class="btn btn-danger" onclick="DELETE_IT(${i})" >Delete</button></td>
         </tr>
         `
 
@@ -125,8 +164,57 @@ function ADD_PRODCT_TO_TABLE(product){
     }
 }
 
-function deleteIT(index){
+function DELETE_IT(index){
     ALL_THE_PRODUCTS.splice(index,1);
-    window.localStorage.setItem('product',ALL_THE_PRODUCTS);
+    if (ALL_THE_PRODUCTS.length === 0) {
+        window.localStorage.removeItem('product');
+    }else{
+        window.localStorage.setItem('product',ALL_THE_PRODUCTS);
+    }
     ADD_PRODCT_TO_TABLE(ALL_THE_PRODUCTS);
 }
+
+function UPDATE_PRODCT_DATA(index){
+    // full of input fields with old product data
+    ProductTitle.value = ALL_THE_PRODUCTS[index].product_name;
+    ProductCategory.value = ALL_THE_PRODUCTS[index].product_category;
+    ProductPrice.value = ALL_THE_PRODUCTS[index].product_price_amount;
+    ProductTaxes.value = ALL_THE_PRODUCTS[index].product_taxes_amount;
+    ProductAds.value = ALL_THE_PRODUCTS[index].product_ads_amount;
+    ProductDiscount.value = ALL_THE_PRODUCTS[index].product_discount_amount;
+    ProductCount.value = ALL_THE_PRODUCTS[index].product_count;
+    
+    // toggle mode to update 
+    create = false ;
+    assistIndexVar = index ;
+    CreateBTN.textContent = 'Update' ;
+    CreateBTN.className = 'btn btn-outline-success bg-gradient shadow rounded-pill w-100 fw-bold'
+
+    //triger calculator function
+    GET_TOTAL_PRICE();
+
+
+    // scroll window to inputs location
+    window.scrollBy(0,-window.innerHeight)
+    
+}
+
+// check if there is product or not to inner 'delet all' button
+
+function CHECK_IF_PRODCT(){
+    if (ALL_THE_PRODUCTS.length <= 0) {
+        return document.getElementById('clearAllContainer').style.display = 'none'
+    }else{
+        return document.getElementById('clearAllContainer').style.display = 'flex'
+        
+    }
+}
+
+// Delet all 
+function DELETE_ALL(){
+    ALL_THE_PRODUCTS.splice(0);
+    window.localStorage.removeItem('product');
+    CHECK_IF_PRODCT();
+    ADD_PRODCT_TO_TABLE(ALL_THE_PRODUCTS);
+}
+

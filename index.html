@@ -5,9 +5,10 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="shortcut icon" href="assists/images/settings.png" type="image/x-icon">
-    <title>CRUD</title>
+    <title>Product Managment system</title>
     <!-- Start Bootstrap -->
     <link rel="stylesheet" href="assists/css/bootstrap.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
     <link rel="stylesheet" href="assists/css/main.css">
 </head>
 <body class="bg-light bg-gradient">
@@ -17,15 +18,13 @@
     <main class="MainCrud">
         <div class="container">
             <div class="row my-3 justify-content-center mx-auto">
-                <div class="col-8">
-                    <div class="alert alert-success" role="alert">
-                        product is added successfully .
-                    </div>
+                <div class="col-8" id="alertBox_Container">
+                    
                 </div>
             </div>
         </div>
         <div class="container">
-            <form method="post" class="product_inputs row my-4 p-2 py-4 border border-2 border-success rounded needs-validation" id="mainPriceingForm" novalidate>
+            <form method="post" class="product_inputs row my-2 p-2 py-4 border border-2 border-success rounded needs-validation" id="mainPriceingForm" novalidate>
                 <div class="col-12 mb-2">
                     <div class="title input-group">
                         <span class="input-group-text">Title</span>
@@ -78,16 +77,16 @@
                 </div>
                 <div class="search row mt-4 justify-content-center">
                     <div class="col-12">
-                        <button class="btn btn-success  bg-gradient shadow rounded-pill w-100" type="submit" id="CreateBtn">Create</button>
+                        <button class="btn btn-success  bg-gradient shadow rounded-pill w-100 fw-bold" type="submit" id="CreateBtn">Create</button>
                     </div>
                 </div>
-                <div class="row text-center mt-4">
+                <div class="row text-center mt-4 justify-content-between" id="clearAllContainer">
                     <div class="col-4">
                         <span class="fw-bold text-uppercase">products count is :</span>
                         <span id="product_count">0</span>
                     </div>
                     <div class="col-8">
-                        <button type="button" class="btn btn-danger rounded-pill w-100">delete all products</button>
+                        <button type="button" onclick="DELETE_ALL()" class="btn btn-danger rounded-pill w-100">delete all products</button>
                     </div>
                 </div>
             </form>
