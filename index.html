@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="assists/images/settings.png" type="image/x-icon">
+    <title>CRUD</title>
+    <!-- Start Bootstrap -->
+    <link rel="stylesheet" href="assists/css/bootstrap.css">
+    <link rel="stylesheet" href="assists/css/main.css">
+</head>
+<body class="bg-light bg-gradient">
+    <nav class="navbar justify-content-center flex-column bg-secondary bg-gradient">
+        <h2 class="fw-bold text-uppercase text-white">Product Managment system</h2>
+    </nav>
+    <main class="MainCrud">
+        <div class="container">
+            <div class="row my-3 justify-content-center mx-auto">
+                <div class="col-8">
+                    <div class="alert alert-success" role="alert">
+                        product is added successfully .
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <form method="post" class="product_inputs row my-4 p-2 py-4 border border-2 border-success rounded needs-validation" id="mainPriceingForm" novalidate>
+                <div class="col-12 mb-2">
+                    <div class="title input-group">
+                        <span class="input-group-text">Title</span>
+                        <input class="form-control text-uppercase" type="text" required placeholder="product name ..." id="title">
+                        <div class="invalid-feedback">
+                            Please enter a Title.
+                        </div>
+                    </div>
+                </div>
+                <div class="pricing row mb-2 justify-content-between align-item-center" >
+                    <div class="col-6 mb-1 col-lg-2">
+                        <div class="input-group">
+                            <span class="input-group-text">price</span>
+                            <input class="form-control text-uppercase" type="number" required placeholder=" price..." id="price">
+                            <div class="invalid-feedback">
+                                Please enter a Price.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-3 mb-1 pe-0 col-lg-2">
+                        <input class="form-control text-uppercase" type="number" required placeholder="Taxes ..." id="tax">
+                        <div class="invalid-feedback">
+                            Please enter a Tax.
+                        </div>
+                    </div>
+                    <div class="col-3 mb-1 pe-0 col-lg-2">
+                        <input class="form-control text-uppercase" type="number" required placeholder="ads ..." id="ads">
+                        <div class="invalid-feedback">
+                            Please enter a ads.
+                        </div>
+                    </div>
+                    <div class="col-3 mb-1 pe-0 col-lg-2">
+                        <input class="form-control text-uppercase" type="number" placeholder="discount ..." id="discount">
+                    </div>
+                    <div class="col-4 mb-1 pe-0 col-lg-2">
+                        <div class="input-group">
+                            <span class="input-group-text">L.E</span>
+                            <span class="input-group-text" id="innerTotal">0.00</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="count row mb-2">
+                    <div class="input-group">
+                        <span class="input-group-text">count</span>
+                        <input class="form-control" type="number" placeholder="Count of product..." id="count">
+                        <span class="input-group-text ms-3">Category</span>
+                        <input class="form-control" type="text" placeholder="category..." id="Category">
+                    </div>
+                    
+                </div>
+                <div class="search row mt-4 justify-content-center">
+                    <div class="col-12">
+                        <button class="btn btn-success  bg-gradient shadow rounded-pill w-100" type="submit" id="CreateBtn">Create</button>
+                    </div>
+                </div>
+                <div class="row text-center mt-4">
+                    <div class="col-4">
+                        <span class="fw-bold text-uppercase">products count is :</span>
+                        <span id="product_count">0</span>
+                    </div>
+                    <div class="col-8">
+                        <button type="button" class="btn btn-danger rounded-pill w-100">delete all products</button>
+                    </div>
+                </div>
+            </form>
+                <div class="outputs row mb-4">
+                    <div class="search col-12 col-lg-6 d-flex align-item-center justify-content-between mb-2">
+                        <span class="input-group-text">search</span>
+                        <input class="form-control text-capitalize" type="search" placeholder="Search on products..." id="searchFaild">
+                    </div>
+                    <div class="col-6 col-lg-3 mb-2">
+                        <button type="button" class="btn btn-success w-100" id="search_title">search by title</button>
+                    </div>
+                    <div class="col-6 col-lg-3 mb-2">
+                        <button type="button" class="btn btn-outline-success w-100" id="search_Category"> search by Category</button>
+                    </div>
+                </div>
+                <div class="innerProductTable row my-4" style="overflow-x: auto;">
+                    <table class="table table-striped mt-5">
+                        <thead>
+                            <tr class="text-uppercase">
+                                <th scope="col">id</th>
+                                <th scope="col">title</th>
+                                <th scope="col">Category</th>
+                                <th scope="col">price</th>
+                                <th scope="col">Tax</th>
+                                <th scope="col">Ads</th>
+                                <th scope="col">discount</th>
+                                <th scope="col">count</th>
+                                <th scope="col">total</th>
+                            </tr>
+                        </thead>
+                        <tbody id="myoutputArea">
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td>No data in the system yet.</td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+        </div>
+    </main>
+
+    <script src="assists/js/bootstrap.bundle.js"></script>
+    <script src="assists/js/app.js"></script>
+</body>
+</html>
