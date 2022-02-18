@@ -12,20 +12,20 @@
     <link rel="stylesheet" href="assists/css/main.css">
 </head>
 <body class="bg-light bg-gradient">
-    <nav class="navbar justify-content-center flex-column bg-secondary bg-gradient">
+    <nav class="navbar justify-content-center flex-column bg-secondary bg-gradient shadow">
         <h2 class="fw-bold text-uppercase text-white">Inventory management system</h2>
     </nav>
     <main class="MainCrud">
         <div class="container">
             <div class="row my-3 justify-content-center mx-auto">
-                <div class="col-8" id="alertBox_Container">
+                <div class="col-12" id="alertBox_Container">
                     
                 </div>
             </div>
         </div>
-        <div class="container">
-            <form method="post" class="product_inputs row my-2 p-2 py-4 border border-2 border-success rounded needs-validation" id="mainPriceingForm" novalidate>
-                <div class="col-12 mb-2">
+        <div class="container ">
+            <form method="POST" class="product_inputs row my-3  py-4 border border-secondary rounded needs-validation align-item-center justify-content-between" id="mainPriceingForm" novalidate>
+                <div class="col-12 mb-2 ">
                     <div class="title input-group">
                         <span class="input-group-text">Title</span>
                         <input class="form-control text-uppercase" type="text" required placeholder="product name ..." id="title">
@@ -35,7 +35,7 @@
                     </div>
                 </div>
                 <div class="pricing row mb-2 justify-content-between align-item-center" >
-                    <div class="col-6 mb-1 col-lg-2">
+                    <div class="col-5 mb-1 col-lg-2 pe-0">
                         <div class="input-group">
                             <span class="input-group-text">price</span>
                             <input class="form-control text-uppercase" type="number" required placeholder=" price..." id="price">
@@ -44,29 +44,23 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-3 mb-1 pe-0 col-lg-2">
-                        <input class="form-control text-uppercase" type="number" required placeholder="Taxes ..." id="tax">
-                        <div class="invalid-feedback">
-                            Please enter a Tax.
-                        </div>
+                    <div class="col-3 mb-1 pe-0 col-lg-2 pe-0">
+                        <input class="form-control text-uppercase" type="number"  placeholder="Taxes ..." id="tax">
                     </div>
-                    <div class="col-3 mb-1 pe-0 col-lg-2">
-                        <input class="form-control text-uppercase" type="number" required placeholder="ads ..." id="ads">
-                        <div class="invalid-feedback">
-                            Please enter a ads.
-                        </div>
+                    <div class="col-3 mb-1 pe-0 col-lg-2 pe-0">
+                        <input class="form-control text-uppercase" type="number"  placeholder="ads ..." id="ads">
                     </div>
-                    <div class="col-3 mb-1 pe-0 col-lg-2">
+                    <div class="col-3 mb-1 pe-0 col-lg-2 pe-0">
                         <input class="form-control text-uppercase" type="number" placeholder="discount ..." id="discount">
                     </div>
-                    <div class="col-4 mb-1 pe-0 col-lg-2">
+                    <div class="col-4 mb-1 pe-0 col-lg-2 pe-0">
                         <div class="input-group">
-                            <span class="input-group-text">L.E</span>
-                            <span class="input-group-text" id="innerTotal">0.00</span>
+                            <span class="input-group-text fw-bold ms-auto">L.E</span>
+                            <span class="input-group-text fw-bold " id="innerTotal">0.00</span>
                         </div>
                     </div>
                 </div>
-                <div class="count row mb-2">
+                <div class="count row mb-2 align-item-center justify-content-between">
                     <div class="input-group">
                         <span class="input-group-text">count</span>
                         <input class="form-control" type="number" placeholder="Count of product..." id="count">
@@ -77,27 +71,27 @@
                 </div>
                 <div class="search row mt-4 justify-content-center">
                     <div class="col-12">
-                        <button class="btn btn-success  bg-gradient shadow rounded-pill w-100 fw-bold" type="submit" id="CreateBtn"><i class="bi bi-plus-square-fill"></i> Create</button>
+                        <button class="btn btn-success  bg-gradient shadow rounded w-100 fw-bold" type="submit" id="CreateBtn"><i class="bi bi-plus-square-fill"></i> Create</button>
                     </div>
                 </div>
-                <div class="row text-center mt-4 justify-content-between" id="clearAllContainer">
-                    <div class="col-4">
+                <div class="row text-center mt-4 justify-content-between align-item-center gap-1" id="clearAllContainer">
+                    <div class="col-5">
                         <span class="input-group-text fw-bold text-uppercase">products count is : <span class="bg-success py-1 px-3 text-light ms-2 " id="product_count"></span></span>
                         <!-- <span id="product_count">0</span> -->
                     </div>
-                    <div class="col-8">
+                    <div class="col-6">
                         <button type="button" onclick="DELETE_ALL()" class="btn btn-danger rounded-pill w-100"><i class="bi bi-trash3"></i> delete all products</button>
                     </div>
                 </div>
             </form>
-                <div class="outputs row border border-2 border-success rounded mb-4 pt-2">
+                <div class="outputs row border border-secondary rounded mb-4 pt-2 align-item-center justify-content-between">
                     <div class="search col-12 col-lg-6 d-flex align-item-center justify-content-between mb-2">
                         <span class="input-group-text  fw-bold text-uppercase">search</span>
-                        <input class="form-control text-capitalize" type="search" placeholder="Search on products..." id="searchFaild">
+                        <input class="form-control text-capitalize" type="search" placeholder="Search on products..." id="searchField">
                     </div>
                     <div class="col-12 col-lg-4 mb-2">
-                        <select  class="form-select py-3 fw-bold text-uppercase" onchange="filterData(this.value)" name="search" id="searchMethod">
-                            <option value="product_name">search by title</option>
+                        <select  class="form-select py-3 fw-bold text-uppercase" onchange="filterData()" name="search" id="searchMethod">
+                            <option selected value="product_name">search by title</option>
                             <option value="product_category">search by category</option>
                             <option value="product_price_amount">search by price</option>
                         </select>
@@ -110,8 +104,8 @@
                         </button>
                     </div>
                 </div>
-                <div class="innerProductTable row my-4" style="overflow-x: auto;">
-                    <table class="table table-striped mt-5">
+                <div class="innerProductTable row my-4 " style="overflow-x: auto;">
+                    <table class="table table-striped table-hover table-success mt-5">
                         <thead>
                             <tr class="text-uppercase">
                                 <th scope="col">id</th>
@@ -123,6 +117,8 @@
                                 <th scope="col">discount</th>
                                 <th scope="col">count</th>
                                 <th scope="col">total</th>
+                                <th scope="col">update</th>
+                                <th scope="col">Delete</th>
                             </tr>
                         </thead>
                         <tbody id="myoutputArea">

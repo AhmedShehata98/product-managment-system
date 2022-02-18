@@ -11,9 +11,10 @@ const pricingForm = document.querySelector('#mainPriceingForm'),
     ProductCount       = document.getElementById('count'),
     ProductInnerTotal  = document.getElementById('innerTotal'),
     CreateBTN          = document.getElementById('CreateBtn'),
-    SearchField        = document.getElementById('searchFaild'),
+    SearchField        = document.getElementById('searchField'),
     SearchBTN_category = document.getElementById('search_Category'),
     SearchBTN_Title    = document.getElementById('search_title'),
+    searchMethod    = document.getElementById('searchMethod'),
     alertBox_Container = document.getElementById('alertBox_Container'),
     TableOutData    = document.getElementById('myoutputArea');
 
@@ -21,7 +22,6 @@ const pricingForm = document.querySelector('#mainPriceingForm'),
     // Create assist variable to identify mode
     let create= true;
     let assistIndexVar;
-    // let NewAllProductsArr=[];
     // Array store all the Products 
     // retrive data that saved in the localstorage to rhe array
     let ALL_THE_PRODUCTS=[];
@@ -38,13 +38,7 @@ window.addEventListener('load',()=>{
     ProductTitle.focus()
 })
 
-// pricingForm.addEventListener('change',(e)=>{
-    
-//     if(pricingForm.checkValidity() === false){
-//         pricingForm.classList.add('was-validated')
-//     }
-// })
-
+SearchField.addEventListener('keyup',filterData)
 pricingForm.addEventListener('submit',(e)=>{
     e.preventDefault();
 })
@@ -165,11 +159,11 @@ function ADD_PRODCT_TO_TABLE(product){
             <td>${product[i].product_discount_amount }</td>
             <td>${product[i].product_count}</td>
             <td>${product[i].product_total_amount }</td>
-            <td class="me-0 p-1 pe-0"><button type="button" class="btn btn-dark" onclick='UPDATE_PRODCT_DATA(${i})'>
+            <td class="me-0 py-1 pe-0"><button type="button" class="btn btn-dark" onclick='UPDATE_PRODCT_DATA(${i})'>
                 <i class="bi bi-pencil-square"></i>
                 Update
             </button></td>
-            <td class="ms-0 p-1 ps-0"><button type="button" class="btn btn-danger" onclick="DELETE_IT(${i})" >
+            <td class="ms-0 py-1 ps-0"><button type="button" class="btn btn-danger" onclick="DELETE_IT(${i})" >
                 <i class="bi bi-trash3"></i> 
                 Delete
             </button></td>
@@ -185,7 +179,7 @@ function DELETE_IT(index){
     if (ALL_THE_PRODUCTS.length === 0) {
         window.localStorage.removeItem('product');
     }else{
-        window.localStorage.setItem('product',ALL_THE_PRODUCTS);
+        window.localStorage.setItem('product',JSON.stringify(ALL_THE_PRODUCTS));
     }
     ADD_PRODCT_TO_TABLE(ALL_THE_PRODUCTS);
 }
@@ -234,14 +228,12 @@ function DELETE_ALL(){
     ADD_PRODCT_TO_TABLE(ALL_THE_PRODUCTS);
 }
 
-function filterData(retrivedValue){
-    // let index = ALL_THE_PRODUCTS.findIndex(product => (product[`${retrivedValue}`]).includes(SearchField.value.toUpperCase()) );
+function filterData(){
     let NewAllProductsArr ;
-    if (retrivedValue === "product_price_amount" ) {
-         NewAllProductsArr = ALL_THE_PRODUCTS.filter(product=> product[`${retrivedValue}`] === +SearchField.value );
+    if (searchMethod.value === "product_price_amount" ) {
+        NewAllProductsArr = ALL_THE_PRODUCTS.filter(product=> product[`${searchMethod.value}`] === +SearchField.value );
     }else{
-        NewAllProductsArr = ALL_THE_PRODUCTS.filter(product=> product[`${retrivedValue}`].includes(SearchField.value.toUpperCase()) );
+        NewAllProductsArr = ALL_THE_PRODUCTS.filter(product=> product[`${searchMethod.value}`].includes(SearchField.value.toUpperCase()) );
     }
     ADD_PRODCT_TO_TABLE(NewAllProductsArr);
-    console.log(NewAllProductsArr);
 }
