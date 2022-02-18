@@ -38,12 +38,12 @@ window.addEventListener('load',()=>{
     ProductTitle.focus()
 })
 
-pricingForm.addEventListener('change',(e)=>{
+// pricingForm.addEventListener('change',(e)=>{
     
-    if(pricingForm.checkValidity() === false){
-        pricingForm.classList.add('was-validated')
-    }
-})
+//     if(pricingForm.checkValidity() === false){
+//         pricingForm.classList.add('was-validated')
+//     }
+// })
 
 pricingForm.addEventListener('submit',(e)=>{
     e.preventDefault();
@@ -68,6 +68,12 @@ CreateBTN.addEventListener('click',()=>{
         ALERT_USER('<i class="bi bi-info-square-fill"></i>','Product details have been successfully updated','warning');
         CreateBTN.textContent = 'search' ;
         CreateBTN.className = 'btn btn-success  bg-gradient shadow rounded-pill w-100 fw-bold' ;
+    }else if(pricingForm.checkValidity() === false){
+        pricingForm.classList.add('was-validated');
+        ALERT_USER('<i class="bi bi-x-circle-fill"></i>',"You can't leave an empty entry field",'danger')
+        if(pricingForm.checkValidity() === true){
+            pricingForm.classList.remove('was-validated');
+        }
     }
 
 })
@@ -139,6 +145,9 @@ function ALERT_USER(icon,message,classname){
     dismissBTN.setAttribute('aria-labe','close');
 
     alertBox_Container.appendChild(wrapper);
+    setTimeout(() => {
+        alertBox_Container.removeChild(wrapper)
+    }, 3000);
 }
 
 function ADD_PRODCT_TO_TABLE(product){

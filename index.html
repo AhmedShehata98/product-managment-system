@@ -82,8 +82,8 @@
                 </div>
                 <div class="row text-center mt-4 justify-content-between" id="clearAllContainer">
                     <div class="col-4">
-                        <span class="fw-bold text-uppercase">products count is :</span>
-                        <span id="product_count">0</span>
+                        <span class="input-group-text fw-bold text-uppercase">products count is : <span class="bg-success py-1 px-3 text-light ms-2 " id="product_count"></span></span>
+                        <!-- <span id="product_count">0</span> -->
                     </div>
                     <div class="col-8">
                         <button type="button" onclick="DELETE_ALL()" class="btn btn-danger rounded-pill w-100"><i class="bi bi-trash3"></i> delete all products</button>
@@ -96,7 +96,7 @@
                         <input class="form-control text-capitalize" type="search" placeholder="Search on products..." id="searchFaild">
                     </div>
                     <div class="col-12 col-lg-4 mb-2">
-                        <select  class="form-select fw-bold text-uppercase" onchange="filterData(this.value)" name="search" id="searchMethod">
+                        <select  class="form-select py-3 fw-bold text-uppercase" onchange="filterData(this.value)" name="search" id="searchMethod">
                             <option value="product_name">search by title</option>
                             <option value="product_category">search by category</option>
                             <option value="product_price_amount">search by price</option>
@@ -104,7 +104,7 @@
                         
                     </div>
                     <div class="col-6 col-lg-2 mb-2">
-                        <button type="button" onclick="ADD_PRODCT_TO_TABLE(ALL_THE_PRODUCTS)" class="btn btn-primary d-flex align-item-center" id="returnAllData">
+                        <button type="button" onclick="ADD_PRODCT_TO_TABLE(ALL_THE_PRODUCTS)" class="btn btn-success d-flex align-item-center mx-auto" id="returnAllData">
                             <i class="bi bi-arrow-clockwise fs-4 me-2"></i>
                             <strong class="lh-lg">show all</strong>
                         </button>
@@ -133,6 +133,7 @@
                                 <td></td>
                                 <td></td>
                                 <td>No data in the system yet.</td>
+                                <td></td>
                                 <td></td>
                                 <td></td>
                             </tr>
