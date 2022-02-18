@@ -21,6 +21,7 @@ const pricingForm = document.querySelector('#mainPriceingForm'),
     // Create assist variable to identify mode
     let create= true;
     let assistIndexVar;
+    // let NewAllProductsArr=[];
     // Array store all the Products 
     // retrive data that saved in the localstorage to rhe array
     let ALL_THE_PRODUCTS=[];
@@ -155,8 +156,14 @@ function ADD_PRODCT_TO_TABLE(product){
             <td>${product[i].product_discount_amount }</td>
             <td>${product[i].product_count}</td>
             <td>${product[i].product_total_amount }</td>
-            <td class="me-0 p-1 pe-0"><button type="button" class="btn btn-dark" onclick='UPDATE_PRODCT_DATA(${i})'>Update</button></td>
-            <td class="ms-0 p-1 ps-0"><button type="button" class="btn btn-danger" onclick="DELETE_IT(${i})" >Delete</button></td>
+            <td class="me-0 p-1 pe-0"><button type="button" class="btn btn-dark" onclick='UPDATE_PRODCT_DATA(${i})'>
+                <i class="bi bi-pencil-square"></i>
+                Update
+            </button></td>
+            <td class="ms-0 p-1 ps-0"><button type="button" class="btn btn-danger" onclick="DELETE_IT(${i})" >
+                <i class="bi bi-trash3"></i> 
+                Delete
+            </button></td>
         </tr>
         `
 
@@ -187,7 +194,7 @@ function UPDATE_PRODCT_DATA(index){
     // toggle mode to update 
     create = false ;
     assistIndexVar = index ;
-    CreateBTN.textContent = 'Update' ;
+    CreateBTN.innerHTML = '<i class="bi bi-pencil-square fs-5 me-3"></i>'+" "+" "+'Update' ;
     CreateBTN.className = 'btn btn-outline-success bg-gradient shadow rounded-pill w-100 fw-bold'
 
     //triger calculator function
@@ -218,3 +225,14 @@ function DELETE_ALL(){
     ADD_PRODCT_TO_TABLE(ALL_THE_PRODUCTS);
 }
 
+function filterData(retrivedValue){
+    // let index = ALL_THE_PRODUCTS.findIndex(product => (product[`${retrivedValue}`]).includes(SearchField.value.toUpperCase()) );
+    let NewAllProductsArr ;
+    if (retrivedValue === "product_price_amount" ) {
+         NewAllProductsArr = ALL_THE_PRODUCTS.filter(product=> product[`${retrivedValue}`] === +SearchField.value );
+    }else{
+        NewAllProductsArr = ALL_THE_PRODUCTS.filter(product=> product[`${retrivedValue}`].includes(SearchField.value.toUpperCase()) );
+    }
+    ADD_PRODCT_TO_TABLE(NewAllProductsArr);
+    console.log(NewAllProductsArr);
+}
